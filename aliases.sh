@@ -28,3 +28,5 @@ alias 'ip=/sbin/ifconfig|grep "inet addr"|awk "{print \$2}"|sed s/addr://g' # ge
 
 alias nmap24='nmap -sP `ip`/24|grep report|awk " { print \$5 } "' # see what hosts respond to pings on your /24 network
 
+alias xc="xclip -selection clipboard"
+
