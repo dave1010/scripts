@@ -1,4 +1,3 @@
-
 alias .='pwd'
 alias ..='cd ..'
 
@@ -22,9 +21,19 @@ alias ack='ack-grep' # http://betterthangrep.com/
 
 alias hl='ack --passthru' # highlight
 
-alias httpserver='ip && python -m SimpleHTTPServer' # serve current directory on port 8000
+alias myip='/sbin/ifconfig | grep "inet addr" | awk "{print \$2}" | sed s/addr://g | grep -v 127\.0\.0\.1' # get all local ip addresses
 
-alias 'ip=/sbin/ifconfig|grep "inet addr"|awk "{print \$2}"|sed s/addr://g' # get all local ip addresses
+# serve current directory on port 8000
+alias httpserver='myip && python -m SimpleHTTPServer' 
 
-alias nmap24='nmap -sP `ip`/24|grep report|awk " { print \$5 } "' # see what hosts respond to pings on your /24 network
+# see what hosts respond to pings on your /24 network
+alias nmap24='nmap -sP `myip`/24 | grep report | awk " { print \$5 } "' 
+
+# make a ssh tunnel from port 2222 on remote host to 22 on your machine
+# usage: ssh-tunnel <user@host>
+alias ssh-tunnel='ssh -f -N -C -R 2222:127.0.0.1:22'
+
+# quick ref
+# sed -i "s/find/replace/g" filename.txt
+# find -name '*.txt' -exec sed -i "s/find/replace/g" {} \; -print
 
