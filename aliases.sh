@@ -33,3 +33,7 @@ alias nmap24='nmap -sP `myip`/24 | grep report | awk " { print \$5 } "'
 # usage: ssh-tunnel <user@host>
 alias ssh-tunnel='ssh -f -N -C -R 2222:127.0.0.1:22'
 
+# quick ref
+# sed -i "s/find/replace/g" filename.txt
+# find -name '*.txt' -exec sed -i "s/find/replace/g" {} \; -print
+
