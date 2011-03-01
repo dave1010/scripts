@@ -1,4 +1,4 @@
-alias .='pwd'
+# alias .='pwd' # this can break some systems
 alias ..='cd ..'
 
 alias g='git' # as i use git so much
