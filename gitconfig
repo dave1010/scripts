@@ -1,0 +1,13 @@
+[alias]
+        st = status
+        ci = commit
+        br = branch
+        co = checkout
+        df = diff
+        lg = log -p  --decorate
+        l = "! git --no-pager log --oneline --graph -n 20 --decorate"
+        # lo = "! git --no-pager log --graph -n 20 --pretty=format:'%Cgreen%h%Creset %s %Cblue%an%Creset';echo"
+        ll = "log --oneline --graph --decorate"
+        sync = "! git pull && git push"
+
+
