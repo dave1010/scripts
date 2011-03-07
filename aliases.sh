@@ -30,3 +30,5 @@ alias nmap24='nmap -sP `ip`/24|grep report|awk " { print \$5 } "' # see what hos
 
 alias xc="xclip -selection clipboard"
 
+goo () { w3m http://gog.is/"$*"; }
+
