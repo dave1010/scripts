@@ -1,4 +1,4 @@
-alias .='pwd'
+# alias .='pwd' # this can break some systems
 alias ..='cd ..'
 
 alias g='git' # as i use git so much
@@ -36,4 +36,6 @@ alias ssh-tunnel='ssh -f -N -C -R 2222:127.0.0.1:22'
 # quick ref
 # sed -i "s/find/replace/g" filename.txt
 # find -name '*.txt' -exec sed -i "s/find/replace/g" {} \; -print
+
+goo () { w3m http://gog.is/"$*"; }
 
