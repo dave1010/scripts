@@ -37,5 +37,8 @@ alias ssh-tunnel='ssh -f -N -C -R 2222:127.0.0.1:22'
 # sed -i "s/find/replace/g" filename.txt
 # find -name '*.txt' -exec sed -i "s/find/replace/g" {} \; -print
 
+#google search
 goo () { w3m http://gog.is/"$*"; }
 
+# google text to speech
+say(){ mplayer -user-agent Mozilla "http://translate.google.com/translate_tts?tl=en&q=$(echo $* | sed 's#\ #\+#g')" > /dev/null 2>&1 ; }
