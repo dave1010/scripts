@@ -3,7 +3,7 @@ alias ..='cd ..'
 
 alias g='git' # as i use git so much
 
-alias xclip='xclip -selection c' # copy stdin to x clipboard
+alias xc='xclip -selection c' # copy stdin to x clipboard
 
 alias nano='nano -c' # show line numbers
 
@@ -14,7 +14,7 @@ alias phplint="find . -name '*.php' -exec php -l {} \; | grep -v 'No syntax erro
 # search wikipedia
 function wiki () {
 COLUMNS=`tput cols`
-dig +short txt "${*}".wp.dg.cx | sed -e 's/" "//g' -e 's/^"//g' -e 's/"$//g' -e 's/ http:/\n\nhttp:/' | fmt -w $COLU$
+dig +short txt "${*}".wp.dg.cx | sed -e 's/" "//g' -e 's/^"//g' -e 's/"$//g' -e 's/ http:/\n\nhttp:/' #| fmt -w $COLU$
 }
 
 alias ack='ack-grep' # http://betterthangrep.com/
