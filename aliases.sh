@@ -5,7 +5,7 @@ alias g='git' # as i use git so much
 
 alias e='emacs -nw'
 
-alias xclip='xclip -selection c' # copy stdin to x clipboard
+alias xc='xclip -selection c' # copy stdin to x clipboard
 
 alias nano='nano -c' # show line numbers
 
@@ -16,7 +16,7 @@ alias phplint="find . -name '*.php' -exec php -l {} \; | grep -v 'No syntax erro
 # search wikipedia
 function wiki () {
 COLUMNS=`tput cols`
-dig +short txt "${*}".wp.dg.cx | sed -e 's/" "//g' -e 's/^"//g' -e 's/"$//g' -e 's/ http:/\n\nhttp:/' | fmt -w $COLU$
+dig +short txt "${*}".wp.dg.cx | sed -e 's/" "//g' -e 's/^"//g' -e 's/"$//g' -e 's/ http:/\n\nhttp:/' #| fmt -w $COLU$
 }
 
 alias ack='ack-grep' # http://betterthangrep.com/
@@ -39,5 +39,8 @@ alias ssh-tunnel='ssh -f -N -C -R 2222:127.0.0.1:22'
 # sed -i "s/find/replace/g" filename.txt
 # find -name '*.txt' -exec sed -i "s/find/replace/g" {} \; -print
 
+#google search
 goo () { w3m http://gog.is/"$*"; }
 
+# google text to speech
+say(){ mplayer -user-agent Mozilla "http://translate.google.com/translate_tts?tl=en&q=$(echo $* | sed 's#\ #\+#g')" > /dev/null 2>&1 ; }
