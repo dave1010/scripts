@@ -3,6 +3,8 @@ alias ..='cd ..'
 
 alias g='git' # as i use git so much
 
+alias e='emacs -nw'
+
 alias xclip='xclip -selection c' # copy stdin to x clipboard
 
 alias nano='nano -c' # show line numbers
