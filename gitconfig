@@ -1,13 +1,29 @@
+[user]
+      	email = dave.hulbert@basecreativeagency.com
+        name = Dave Hulbert
+[core]
+      	#editor = nano
+
+[color]
+       	diff = auto
+        status = auto
+        branch = auto
 [alias]
-        st = status
+       	st = status
         ci = commit
         br = branch
         co = checkout
         df = diff
+        d = diff --color-words
         lg = log -p  --decorate
-        l = "! git --no-pager log --oneline --graph -n 20 --decorate"
+		l = "! git --no-pager log --oneline --graph -n 18 --decorate"
         # lo = "! git --no-pager log --graph -n 20 --pretty=format:'%Cgreen%h%Creset %s %Cblue%an%Creset';echo"
-        ll = "log --oneline --graph --decorate"
+        ll = "log --oneline --graph --decorate --branches"
         sync = "! git pull && git push"
-
-
+		f = "! git status --porcelain| awk '{ print $2 }' | head -n 1" # get the 1st changed file
+[branch]
+	autosetupmerge = always
+[push]
+	default = tracking
+[merge]
+	stat = true
