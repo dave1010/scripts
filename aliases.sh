@@ -11,7 +11,8 @@ alias xc='xclip -selection c' # copy stdin to x clipboard
 
 alias nano='nano -c' # show line numbers
 
-alias f='find . -name' # quick find
+#alias f='find . -name' # quick find
+alias f='find | grep' # quick find
 
 alias phplint="find . -name '*.php' -exec php -l {} \; | grep -v 'No syntax errors detected'" # lint all php files in dir
 
