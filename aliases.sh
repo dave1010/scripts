@@ -1,9 +1,11 @@
-# alias .='pwd' # this can break some systems
-alias ..='cd ..'
+alias ..='cd ..' # go up a dir
+
+alias n='nautilus `pwd` &' # open the working dir in nautilus
 
 alias g='git' # as i use git so much
 
 alias e='emacs -nw'
+alias v='vim -c start'
 
 alias xc='xclip -selection c' # copy stdin to x clipboard
 
