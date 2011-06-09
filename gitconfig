@@ -21,6 +21,7 @@
         ll = "log --oneline --graph --decorate --branches"
         sync = "! git pull && git push"
 		f = "! git status --porcelain| awk '{ print $2 }' | head -n 1" # get the 1st changed file
+		overview = log --graph --simplify-by-decoration --decorate --pretty=format:'%cd%Cgreen%d %Cblue%h %Creset%s' --date=short
 [branch]
 	autosetupmerge = always
 [push]
