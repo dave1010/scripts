@@ -1,5 +1,3 @@
-alias ..='cd ..' # go up a dir
-
 alias n='nautilus `pwd` &' # open the working dir in nautilus
 
 alias g='git' # as i use git so much
@@ -11,7 +9,8 @@ alias xc='xclip -selection c' # copy stdin to x clipboard
 
 alias nano='nano -c' # show line numbers
 
-alias f='find . -name' # quick find
+#alias f='find . -name' # quick find
+alias f='find | grep' # quick find
 
 alias phplint="find . -name '*.php' -exec php -l {} \; | grep -v 'No syntax errors detected'" # lint all php files in dir
 
@@ -46,3 +45,19 @@ goo () { w3m http://gog.is/"$*"; }
 
 # google text to speech
 say(){ mplayer -user-agent Mozilla "http://translate.google.com/translate_tts?tl=en&q=$(echo $* | sed 's#\ #\+#g')" > /dev/null 2>&1 ; }
+
+
+
+# go up a number of directories
+# usage: cdup == "cd .."; cdup 5 == "cd .." x 5
+# from picklepete
+cdup() {
+  levels=${1-1}
+  while ((levels--)); do
+        cd ..
+  done
+}
+
+# old "go up a dir" alias
+# alias ..='cd ..' # go up a dir
+alias ..='cdup' # go up x dirs
