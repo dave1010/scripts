@@ -61,3 +61,16 @@ cdup() {
 # old "go up a dir" alias
 # alias ..='cd ..' # go up a dir
 alias ..='cdup' # go up x dirs
+
+# echo some of the output from the last command
+# 1st parameter is the line number
+# 2nd parameter is the word (optional, gets whole line otherwise)
+o() {
+  $(history | 
+      tail -n 2 | 
+      head -n 1 | 
+      cut -d " " -f 3-) | 
+  head -n $1 | 
+  tail -n 1 | 
+  awk " { print \$0$2 } "
+}
