@@ -1,28 +1,33 @@
+#### SHORTCUTS ####
+
+#editors
 alias n='nautilus `pwd` &' # open the working dir in nautilus
-
-alias g='git' # as i use git so much
-
 alias e='emacs -nw'
 alias v='vim -c start'
-
-alias xc='xclip -selection c' # copy stdin to x clipboard
-
+alias s='/home/base/bin/sublimetext2/sublime_text'
 alias nano='nano -c' # show line numbers
 
-#alias f='find . -name' # quick find
+# searching files
 alias f='find | grep' # quick find
-
-alias phplint="find . -name '*.php' -exec php -l {} \; | grep -v 'No syntax errors detected'" # lint all php files in dir
-
-# search wikipedia
-function wiki () {
-COLUMNS=`tput cols`
-dig +short txt "${*}".wp.dg.cx | sed -e 's/" "//g' -e 's/^"//g' -e 's/"$//g' -e 's/ http:/\n\nhttp:/' #| fmt -w $COLU$
-}
-
 alias ack='ack-grep' # http://betterthangrep.com/
-
 alias hl='ack --passthru' # highlight
+
+#misc
+alias g='git' # as i use git so much
+alias xc='xclip -selection c' # copy stdin to x clipboard
+alias eb='$EDITOR ~/.bashrc'
+alias sb='source ~/.bashrc'
+
+#development
+alias phplint="php -l"
+alias phplintall="find . -name '*.php' -exec php -l {} \; | grep -v 'No syntax errors detected'"
+alias jshint='rhino /home/base/projects/jshint/env/rhino.js'
+alias jshintall="find -name '*.js' -exec rhino /home/base/projects/jshint/env/rhino.js {} \;"
+alias tailphperror="tail -n 20 -f /var/log/apache2/error.log | sed 's/\\n/\n/g'"
+alias phpunitslow='phpunit --no-configuration --group slow --verbose tests'
+
+
+#### NETWORK ####
 
 alias myip='/sbin/ifconfig | grep "inet addr" | awk "{print \$2}" | sed s/addr://g | grep -v 127\.0\.0\.1' # get all local ip addresses
 
@@ -36,9 +41,21 @@ alias nmap24='nmap -sP `myip`/24 | grep report | awk " { print \$5 } "'
 # usage: ssh-tunnel <user@host>
 alias ssh-tunnel='ssh -f -N -C -R 2222:127.0.0.1:22'
 
-# quick ref
-# sed -i "s/find/replace/g" filename.txt
-# find -name '*.txt' -exec sed -i "s/find/replace/g" {} \; -print
+
+#### DEVELOPMENT ####
+
+
+#### FUNCTIONS ####
+
+# search wikipedia
+function wiki () {
+  dig +short txt "${*}".wp.dg.cx | sed -e 's/" "//g' -e 's/^"//g' -e 's/"$//g' -e 's/ http:/\n\nhttp:/'
+}
+
+function quickref() {
+  echo sed -i "s/find/replace/g" filename.txt
+  echo find -name '*.txt' -exec sed -i "s/find/replace/g" {} \; -print
+}
 
 #google search
 goo () { w3m http://gog.is/"$*"; }
@@ -58,8 +75,6 @@ cdup() {
   done
 }
 
-# old "go up a dir" alias
-# alias ..='cd ..' # go up a dir
 alias ..='cdup' # go up x dirs
 
 # echo some of the output from the last command
@@ -74,3 +89,5 @@ o() {
   tail -n 1 | 
   awk " { print \$0$2 } "
 }
+
+
