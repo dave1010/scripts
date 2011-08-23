@@ -22,6 +22,7 @@
         sync = "! git pull && git push"
 		f = "! git status --porcelain| awk '{ print $2 }' | head -n 1" # get the 1st changed file
 		overview = log --graph --simplify-by-decoration --decorate --pretty=format:'%cd%Cgreen%d %Cblue%h %Creset%s' --date=short
+		stage-empty-file = ""! git update-index --add --cacheinfo 100644 $(git hash-object -w /dev/null) "
 [branch]
 	autosetupmerge = always
 [push]
