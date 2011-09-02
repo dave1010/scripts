@@ -42,8 +42,6 @@ alias nmap24='nmap -sP `myip`/24 | grep report | awk " { print \$5 } "'
 alias ssh-tunnel='ssh -f -N -C -R 2222:127.0.0.1:22'
 
 
-#### DEVELOPMENT ####
-
 
 #### FUNCTIONS ####
 
@@ -55,6 +53,23 @@ function wiki () {
 function quickref() {
   echo sed -i "s/find/replace/g" filename.txt
   echo find -name '*.txt' -exec sed -i "s/find/replace/g" {} \; -print
+}
+
+function mysqlref() {
+  echo 'SELECT ... FROM ... WHERE ... ORDER BY ... DESC LIMIT ...'
+  echo 
+  echo 'INSERT INTO table1 (id, field2) VALUES (1, value2)'
+  echo 'INSERT INTO table1 (id, field2) VALUES (1, value2), (2, value2b)'
+  echo 'INSERT INTO table1 SET field1=value_1, field2=value_2'
+  echo 'UPDATE table1 SET field1=new_value1 WHERE condition'
+  echo 'DELETE FROM table1 WHERE condition'
+  echo
+  echo 'SHOW DATABASES; SHOW TABLES;'
+  echo 'DESCRIBE table; SHOW CREATE TABLE table'
+  echo 'SHOW PROCESSLIST; KILL process_number'
+  echo
+  echo 'CREATE TABLE table (id INT(11), title VARCHAR(255), PRIMARY KEY (id))'
+  echo 'update wp_options set option_value ="http://example.com"  where option_name like "home" or option_name like "siteurl"'
 }
 
 #google search
@@ -90,4 +105,18 @@ o() {
   awk " { print \$0$2 } "
 }
 
-
+# record the screen
+# requires wmctrl, xwininfo and byzanz
+# usage: rec <windowname> <seconds> <filename>
+# filename should end in flv, gif or ogg/ogv
+function rec() {
+  X=$(xwininfo -id $(wmctrl -l | grep -i "$1" | head -n 1 | awk '{print $1}') | grep 'Absolute upper-left X:' | awk "{ print \$NF }" )
+  Y=$(xwininfo -id $(wmctrl -l | grep -i "$1" | head -n 1 | awk '{print $1}') | grep 'Absolute upper-left Y:' | awk "{ print \$NF }" )
+  W=$(xwininfo -id $(wmctrl -l | grep -i "$1" | head -n 1 | awk '{print $1}') | grep 'Width:' | awk "{ print \$NF }" )
+  H=$(xwininfo -id $(wmctrl -l | grep -i "$1" | head -n 1 | awk '{print $1}') | grep 'Height:' | awk "{ print \$NF }" )
+  echo In 3 seconds will record window "$1" at $X,$Y size $W,$H for $2 seconds to file "$3"
+  sleep 3;
+  echo Recording
+  byzanz-record --x=$X --y=$Y --width=$W --height=$H --delay=0 -c -d $2 "$3"
+  echo Done
+}
