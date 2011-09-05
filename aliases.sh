@@ -31,6 +31,8 @@ alias shortphptags="ack --php '\<\?[^px]'" # find short PHP open tags
 
 alias myip='/sbin/ifconfig | grep "inet addr" | awk "{print \$2}" | sed s/addr://g | grep -v 127\.0\.0\.1' # get all local ip addresses
 
+alias mydns='wget -qO - http://ifconfig.me/all|grep remote_host|awk "{print \$2 }"'
+
 # serve current directory on port 8000
 alias httpserver='myip && python -m SimpleHTTPServer' 
 
