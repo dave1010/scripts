@@ -25,7 +25,7 @@ alias jshint='rhino /home/base/projects/jshint/env/rhino.js'
 alias jshintall="find -name '*.js' -exec rhino /home/base/projects/jshint/env/rhino.js {} \;"
 alias tailphperror="tail -n 20 -f /var/log/apache2/error.log | sed 's/\\n/\n/g'"
 alias phpunitslow='phpunit --no-configuration --group slow --verbose tests'
-
+alias shortphptags="ack --php '\<\?[^px]'" # find short PHP open tags
 
 #### NETWORK ####
 
