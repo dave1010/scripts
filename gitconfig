@@ -16,13 +16,13 @@
         df = diff
         d = diff --color-words
         lg = log -p  --decorate
-		l = "! git --no-pager log --oneline --graph -n 18 --decorate"
+        l = "! git --no-pager log --oneline --graph -n 18 --decorate"
         # lo = "! git --no-pager log --graph -n 20 --pretty=format:'%Cgreen%h%Creset %s %Cblue%an%Creset';echo"
         ll = "log --oneline --graph --decorate --branches"
         sync = "! git pull && git push"
-		f = "! git status --porcelain| awk '{ print $2 }' | head -n 1" # get the 1st changed file
-		overview = log --graph --simplify-by-decoration --decorate --pretty=format:'%cd%Cgreen%d %Cblue%h %Creset%s' --date=short
-		stage-empty-file = ""! git update-index --add --cacheinfo 100644 $(git hash-object -w /dev/null) "
+        f = "! git status --porcelain| awk '{ print $2 }' | head -n 1" # get the 1st changed file
+        overview = log --graph --simplify-by-decoration --decorate --pretty=format:'%cd%Cgreen%d %Cblue%h %Creset%s' --date=short
+        stage-empty-file = ""! git update-index --add --cacheinfo 100644 $(git hash-object -w /dev/null) "
 [branch]
 	autosetupmerge = always
 [push]
