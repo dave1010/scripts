@@ -6,12 +6,14 @@ files_modified=`git diff-index --name-only HEAD`
 
 for f in $files_modified; do
     if [[ $f == *.php ]]; then
-        php -l "$f" > /dev/null
-        if [ $? != 0 ]; then
-            echo "Code fails PHP lint check."
-            echo "Aborting commit. Commit again with --no-verify to ignore."
-            exit 1
-        fi
-    fi
+		if [[ -r $f ]]; then
+			php -l "$f" > /dev/null
+			if [ $? != 0 ]; then
+				echo "Code fails PHP lint check."
+				echo "Aborting commit. Commit again with --no-verify to ignore."
+				exit 1
+			fi
+		fi
+	fi
 done
 exit
