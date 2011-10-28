@@ -1,17 +1,31 @@
 #!/bin/bash
 
-files_modified=`git diff-index --name-only HEAD`
+# Installation:
+# $ sudo chmod a+x pre-commit
+# $ sudo cp pre-commit /usr/share/git-core/templates/hooks/pre-commit
 
-# PHP lint files
+# Simple check for merge conflics
+conflicts=`git diff --cached --name-only -S'<<<<<<'`
 
-for f in $files_modified; do
-    if [[ $f == *.php ]]; then
-        php -l "$f" > /dev/null
-        if [ $? != 0 ]; then
-            echo "Code fails PHP lint check."
-            echo "Aborting commit. Commit again with --no-verify to ignore."
-            exit 1
-        fi
+if [ -n "$conflicts" ]; then
+echo "Unresolved merge conflicts added in this commit:"
+  echo $conflicts
+fi
+
+# Check PHP files for syntax errors
+for i in `git diff --cached --name-only | grep '.php'`;
+do
+	thisphperror=`php -l $i | grep -v 'No syntax errors detected in'`
+
+	if [ -n "$thisphperror" ]; then
+		echo "PHP errors added in file: " $i
+		phperrors='true'
     fi
 done
-exit
+
+# Something went wrong
+if [[ -n "$conflicts" || -n "$phperrors" ]]; then
+	echo
+	echo "Commit with '-n' to bypass checks"
+	exit 1
+fi
