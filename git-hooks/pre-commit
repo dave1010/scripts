@@ -1,30 +1,75 @@
 #!/bin/bash
 
-# Installation:
-# $ sudo chmod a+x pre-commit
-# $ sudo cp pre-commit /usr/share/git-core/templates/hooks/pre-commit
+# Check for merge conflicts and PHP / JS errors
+
+# Tested on Linux and Windows (with git-bash)
+# Requires git, grep, php
+
+# Installation (per-project):
+# 1) Copy this file to <project>/.git/hooks/pre-commit
+# 2) (Unix only) make sure it's executable
+
+# Installation (global):
+# 1) Copy this file to /usr/share/git-core/templates/hooks/pre-commit
+# 2) (Unix only) make sure it's executable
+# 3) Run "git init" in a project to automatically get the template
+
+
+# CONFIG
+
+# Give options empty values to bypass checks ("OPTIONNAME=")
+
+# whether to check whether git merge conflicts have been added
+CONFLICTS=1
+
+# full path to your grep executable if not in $PATH
+GREP=`which grep`
+
+# full path to your PHP executable if not in $PATH
+PHP=`which php`	
+
+# full path to your jshint executable if not in $PATH
+JSHINT=`which jshint`	
+
+
+
 
 # Simple check for merge conflics
-conflicts=`git diff --cached --name-only -S'<<<<<<'`
+if [[ -n $CONFLICTS ]]; then
+	conflicts=`git diff --cached --name-only -S'<<<<<< HEAD'`
 
-if [ -n "$conflicts" ]; then
-echo "Unresolved merge conflicts added in this commit:"
-  echo $conflicts
+	if [ -n "$conflicts" ]; then
+		echo "Unresolved merge conflicts in this commit:"
+		echo $conflicts
+	fi
 fi
 
 # Check PHP files for syntax errors
-for i in `git diff --cached --name-only | grep '.php'`;
-do
-	thisphperror=`php -l $i | grep -v 'No syntax errors detected in'`
+if [[ -n $PHP && -n $GREP ]]; then
+	for i in `git diff --cached --name-only | grep '.php'`; do
+		thisphperror=`$PHP -l "$i" | grep -v 'No syntax errors detected in'`
 
-	if [ -n "$thisphperror" ]; then
-		echo "PHP errors added in file: " $i
-		phperrors='true'
-    fi
-done
+		if [ -n "$thisphperror" ]; then
+			echo "PHP errors added in file: " $i
+			phperrors='true'
+		fi
+	done
+fi
+
+# Check JavaScript files for syntax errors and poor coding practices
+if [[ -n $JSHINT && -n $GREP ]]; then
+	for i in `git diff --cached --name-only | grep '.php'`; do
+		thisjshinterror=`$JSHINT "$i"`
+
+		if [ -n "$thisphperror" ]; then
+			echo "JavaScript problems added in file: " $i
+			jshinterrors='true'
+		fi
+	done
+fi
 
 # Something went wrong
-if [[ -n "$conflicts" || -n "$phperrors" ]]; then
+if [[ -n "$conflicts" || -n "$phperrors" || -n "$jshinterrors" ]]; then
 	echo
 	echo "Commit with '-n' to bypass checks"
 	exit 1
