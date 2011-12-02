@@ -1,9 +1,14 @@
 #!/bin/bash
 
 # Check for merge conflicts and PHP / JS errors
+# Version 1.0
+# By @dave1010
 
-# Tested on Linux and Windows (with git-bash)
-# Requires git, grep, php
+# Tested on Linux (and Windows with git-bash, a bit)
+
+# Requires git, grep and php to be in $PATH
+# If any commands aren't in the path then the check will be skipped
+# 
 
 # Installation (per-project):
 # 1) Copy this file to <project>/.git/hooks/pre-commit
@@ -57,7 +62,7 @@ if [[ -n $PHP && -n $GREP ]]; then
 		fi
 
 		thisshortphptags=`grep -P '<\?(?!(php|xml))' "$i"`
-		
+
 		if [ -n "$thisshortphptags" ]; then
 			echo "PHP short tags added in file: " $i
 			phpshorttags='true'
@@ -68,11 +73,9 @@ fi
 
 # Check JavaScript files for syntax errors and poor coding practices
 if [[ -n $JSHINT && -n $GREP ]]; then
-	for i in `git diff --cached --name-only | grep '.php'`; do
-		thisjshinterror=`$JSHINT "$i"`
-
-		if [ -n "$thisphperror" ]; then
-			echo "JavaScript problems added in file: " $i
+	for i in `git diff --cached --name-only | grep '.js'`; do
+		$JSHINT "$i"
+		if [ $? -ne 0 ]; then
 			jshinterrors='true'
 		fi
 	done
@@ -84,3 +87,4 @@ if [[ -n "$conflicts" || -n "$phperrors" || -n "$jshinterrors" || -n "$phpshortt
 	echo "Commit with '-n' to bypass checks"
 	exit 1
 fi
+
