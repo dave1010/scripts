@@ -10,7 +10,9 @@
 # 2) (Unix only) make sure it's executable
 
 # Installation (global):
-# 1) Copy this file to /usr/share/git-core/templates/hooks/pre-commit
+# 1) Copy this file to 
+#        Unix: /usr/share/git-core/templates/hooks/pre-commit
+#        Windows: C:\Program Files\Git\share\git-core\templates\hooks
 # 2) (Unix only) make sure it's executable
 # 3) Run "git init" in a project to automatically get the template
 
