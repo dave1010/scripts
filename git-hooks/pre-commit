@@ -12,7 +12,7 @@
 # Installation (global):
 # 1) Copy this file to 
 #        Unix: /usr/share/git-core/templates/hooks/pre-commit
-#        Windows: C:\Program Files\Git\share\git-core\templates\hooks
+#        Windows: C:\Program Files (x86)\Git\share\git-core\templates\hooks
 # 2) (Unix only) make sure it's executable
 # 3) Run "git init" in a project to automatically get the template
 
@@ -46,7 +46,7 @@ if [[ -n $CONFLICTS ]]; then
 	fi
 fi
 
-# Check PHP files for syntax errors
+# Check PHP files for syntax errors and short tags
 if [[ -n $PHP && -n $GREP ]]; then
 	for i in `git diff --cached --name-only | grep '.php'`; do
 		thisphperror=`$PHP -l "$i" | grep -v 'No syntax errors detected in'`
@@ -55,6 +55,14 @@ if [[ -n $PHP && -n $GREP ]]; then
 			echo "PHP errors added in file: " $i
 			phperrors='true'
 		fi
+
+		thisshortphptags=`grep -P '<\?(?!(php|xml))' "$i"`
+		
+		if [ -n "$thisshortphptags" ]; then
+			echo "PHP short tags added in file: " $i
+			phpshorttags='true'
+		fi
+
 	done
 fi
 
@@ -71,7 +79,7 @@ if [[ -n $JSHINT && -n $GREP ]]; then
 fi
 
 # Something went wrong
-if [[ -n "$conflicts" || -n "$phperrors" || -n "$jshinterrors" ]]; then
+if [[ -n "$conflicts" || -n "$phperrors" || -n "$jshinterrors" || -n "$phpshorttags" ]]; then
 	echo
 	echo "Commit with '-n' to bypass checks"
 	exit 1
