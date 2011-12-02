@@ -1,13 +1,14 @@
 #!/bin/bash
 
 # Check for merge conflicts and PHP / JS errors
-# Version 1.0
+# Version 1.2
 # By @dave1010
 
 # Tested on Linux (and Windows with git-bash, a bit)
 
-# Requires git, grep, php and jshint to be in $PATH
+# Requires git, grep and php to be in $PATH
 # If any commands aren't in the path then the check will be skipped
+# 
 
 # Installation (per-project):
 # 1) Copy this file to <project>/.git/hooks/pre-commit
@@ -20,13 +21,25 @@
 # 2) (Unix only) make sure it's executable
 # 3) Run "git init" in a project to automatically get the template
 
+# Changelog
+# 0.1 Merge conflict checking
+# 0.2 Basic PHP linting
+# 0.3 Clean up
+# 0.4 JSHint
+# 1.0 PHP short tags
+# 1.1 Split PHP linting and short tag checking
+# 1.2 Capatability for grep without "-P" option
+
+
 
 # CONFIG
-
 # Give options empty values to bypass checks ("OPTIONNAME=")
 
-# whether to check whether git merge conflicts have been added
+# whether to check ig git merge conflicts have been added
 CONFLICTS=1
+
+# whether to check for php short tags
+PHPSHORTTAGS=1
 
 # full path to your grep executable if not in $PATH
 GREP=`which grep`
@@ -50,7 +63,21 @@ if [[ -n $CONFLICTS ]]; then
 	fi
 fi
 
-# Check PHP files for syntax errors and short tags
+# Check PHP files for short tags
+if [[ -n $PHPSHORTTAGS &&  -n $GREP ]]; then
+	for i in `git diff --cached --name-only | grep '.php'`; do
+		thisshortphptags=`grep -E '<\?' "$i" | grep -v '<\?php' | grep -v '<\?xml'`
+
+		if [ -n "$thisshortphptags" ]; then
+			echo "PHP short tags added in file: " $i
+			phpshorttags='true'
+		fi
+
+	done
+fi
+
+
+# Check PHP files for syntax errors
 if [[ -n $PHP && -n $GREP ]]; then
 	for i in `git diff --cached --name-only | grep '.php'`; do
 		thisphperror=`$PHP -l "$i" | grep -v 'No syntax errors detected in'`
@@ -58,13 +85,6 @@ if [[ -n $PHP && -n $GREP ]]; then
 		if [ -n "$thisphperror" ]; then
 			echo "PHP errors added in file: " $i
 			phperrors='true'
-		fi
-
-		thisshortphptags=`grep -P '<\?(?!(php|xml))' "$i"`
-
-		if [ -n "$thisshortphptags" ]; then
-			echo "PHP short tags added in file: " $i
-			phpshorttags='true'
 		fi
 
 	done
