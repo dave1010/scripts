@@ -13,7 +13,10 @@ alias ack='ack-grep' # http://betterthangrep.com/
 alias hl='ack --passthru' # highlight
 
 #misc
+alias o='gnome-open' # open a file with gnome's default handler
+alias r='fc -s' # run command in bash history
 alias g='git' # as i use git so much
+alias ss='ge /home/base/bin/sublimetext2/sublime_text'
 alias xc='xclip -selection c' # copy stdin to x clipboard
 alias eb='$EDITOR ~/.bashrc'
 alias sb='source ~/.bashrc'
@@ -21,7 +24,7 @@ alias sb='source ~/.bashrc'
 #development
 alias phplint="php -l"
 alias phplintall="find . -name '*.php' -exec php -l {} \; | grep -v 'No syntax errors detected'"
-alias jshint='rhino /home/base/projects/jshint/env/rhino.js'
+#alias jshint='rhino /home/base/projects/jshint/env/rhino.js'
 alias jshintall="find -name '*.js' -exec rhino /home/base/projects/jshint/env/rhino.js {} \;"
 alias tailphperror="tail -n 20 -f /var/log/apache2/error.log | sed 's/\\n/\n/g'"
 alias phpunitslow='phpunit --no-configuration --group slow --verbose tests'
@@ -70,7 +73,7 @@ function mysqlref() {
   echo 'DESCRIBE table; SHOW CREATE TABLE table'
   echo 'SHOW PROCESSLIST; KILL process_number'
   echo
-  echo 'CREATE TABLE table (id INT(11), title VARCHAR(255), PRIMARY KEY (id))'
+  echo 'CREATE TABLE table (id INT(11) AUTO_INCREMENT, title VARCHAR(255), PRIMARY KEY (id))'
   echo 'update wp_options set option_value ="http://example.com"  where option_name like "home" or option_name like "siteurl"'
 }
 
