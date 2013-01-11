@@ -4,7 +4,7 @@
 alias n='nautilus `pwd` &' # open the working dir in nautilus
 alias e='emacs -nw'
 alias v='vim -c start'
-alias s='/home/base/bin/sublimetext2/sublime_text'
+alias s='sublime-text'
 alias nano='nano -c' # show line numbers
 
 # searching files
