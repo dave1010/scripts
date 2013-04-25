@@ -11,7 +11,7 @@
 # 
 
 # Installation (per-project):
-# wget https://raw.github.com/dave1010/scripts/master/git-hooks/pre-commit -O .git/hooks/pre-commit && chmod a+x /usr/share/git-core/templates/hooks/pre-commit
+# wget https://raw.github.com/dave1010/scripts/master/git-hooks/pre-commit -O .git/hooks/pre-commit && chmod a+x .git/hooks/pre-commit
 # 1) Copy this file to <project>/.git/hooks/pre-commit
 # 2) (Unix only) make sure it's executable
 
